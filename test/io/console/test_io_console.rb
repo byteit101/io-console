@@ -535,6 +535,7 @@ class TestIO_Console
     w.print cc
     w.flush
     result = EnvUtil.timeout(3) {r.gets}
+    assert_not_nil(result)
     if result
       case cc.chr
       when "\C-A".."\C-_"
@@ -572,7 +573,7 @@ class TestIO_Console
       if cc = ctrl["intr"]
         assert_ctrl("#{cc.ord}", cc, r, w)
         assert_ctrl("#{cc.ord}", cc, r, w)
-        assert_ctrl("Interrupt", cc, r, w) unless host_os?(/linux/)
+        assert_ctrl("Interrupt", cc, r, w) unless host_os?(/linux/) or RUBY_ENGINE == "jruby"
       end
       if cc = ctrl["dsusp"]
         assert_ctrl("#{cc.ord}", cc, r, w)
