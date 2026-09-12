@@ -166,4 +166,21 @@ class IO
       str
     end
   end
+
+  module PlatformTty           # :nodoc:
+    def tty?(*modes)
+      modes.each do |mode|
+        case mode
+        when nil
+        when :any
+        when Symbol
+          raise ArgumentError, "unknown tty type: #{mode.inspect}"
+        else
+          raise TypeError, "wrong argument type #{mode.class} (expected Symbol)"
+        end
+      end
+      super()
+    end
+  end
+  private_constant :PlatformTty
 end

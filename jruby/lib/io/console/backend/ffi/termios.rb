@@ -275,4 +275,5 @@ end
 
 class IO
   include Console
+  prepend PlatformTty if instance_method(:tty?).arity == 0
 end
